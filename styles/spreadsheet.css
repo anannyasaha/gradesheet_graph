@@ -1,1 +1,33 @@
-/* YOUR CODE GOES HERE */
+.tableheader{
+    font-size:30px;
+    font-weight: bold;
+    padding-right: 2rem;
+    padding-left: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    background-color: #e0e0e0;
+}
+
+
+.rowheader{
+    font-size:30px;
+    font-weight: bold;
+    padding-right: 2rem;
+    padding-left: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    background-color: #e0e0e0;
+}
+.tableData{
+    font-size: 25px;
+    font-weight: lighter;
+    padding-right: 2rem;
+    padding-left: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    text-align: center;
+}
+#dataTable{
+    border-color: black;
+    border-collapse: collapse;
+}
