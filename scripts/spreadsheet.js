@@ -73,6 +73,7 @@ for (var i=1;i<row_number;i++){
         var $input = $('<input>', {
             value: $this.text(),
             type: 'text',
+            width:'60px',
             blur: function() {
             $this.text(this.value);
             },
@@ -121,7 +122,7 @@ function grade(column_no){
 }
 function makeGraph(){
     const margin = 50;
-    const width = 400;
+    const width = 500;
     const height = 250;
     const chartWidth = width - 2 * margin;
     const chartHeight = height - 2 * margin;
@@ -148,9 +149,22 @@ function makeGraph(){
                 .attr('x', width / 2)
                 .attr('y', margin)
                 .attr('text-anchor', 'middle')
-                .text('grades');
+                .text('Grade Distribution');
                 let g = svg.append('g')
                 .attr('transform', `translate(${margin}, ${margin})`);
+    svg.append("text")
+                .attr("class", "y label")
+                .attr("transform", "rotate(-90)")
+                .attr("y", 15)
+                .attr("x",-25)
+                .attr('text-anchor', 'end')
+                .text("Frequency(%)");
+    svg.append("text")
+                .attr("class", "x label")
+                .attr("y",240)
+                .attr("x",295)
+                .attr('text-anchor', 'end')
+                .text("Grades");
 
 // y-axis
 g.append('g')
