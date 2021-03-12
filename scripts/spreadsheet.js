@@ -85,10 +85,7 @@ for (var i=1;i<row_number;i++){
 
 };
 function grade(column_no){
-    var graph=document.getElementsByTagName('svg');
-    if(graph!=null){
-        document.removeChild(graph);
-    }
+    d3.select("svg").remove();
     
         var A_count=0;
         var B_count=0;
@@ -113,37 +110,40 @@ function grade(column_no){
         else F_count++;
     }
     grad_dict=
-    [{"grade": "A", "frequency": A_count},
-    {"grade": "B", "frequency": B_count},
-    {"grade": "C", "frequency": C_count},
-    {"grade": "D", "frequency": D_count},
-    {"grade": "F", "frequency": F_count}]
+    [{"grade": "A", "frequency": A_count/(row_number-1)},
+    {"grade": "B", "frequency": B_count/(row_number-1)},
+    {"grade": "C", "frequency": C_count/(row_number-1)},
+    {"grade": "D", "frequency": D_count/(row_number-1)},
+    {"grade": "F", "frequency": F_count/(row_number-1)}]
     console.log(grad_dict);
     
 
 }
 function makeGraph(){
     const margin = 50;
-    const width = 800;
-    const height = 500;
+    const width = 400;
+    const height = 250;
     const chartWidth = width - 2 * margin;
     const chartHeight = height - 2 * margin;
 
     const colourScale = d3.scaleLinear()
-                            .domain([2, 9])
-                            .range(['white','blue']);
+                            .domain([0, 1])
+                            .range(['#A3D4FF','#9F9CFF']);
     const xScale = d3.scaleBand() // discrete, bucket
                             .domain(grad_dict.map((data) => data.grade))
                             .range([0, chartWidth])
                             .padding(0.3);
     const yScale = d3.scaleLinear()
-                            .domain([0, 9])
+                            .domain([0, 1])
                             .range([chartHeight, 0]);
     
     let svg = d3.select('body')
                         .append('svg')
                             .attr('width', width)
-                            .attr('height', height);
+                            .attr('height', height)
+                            .attr("align","center");
+    $("svg").css({top: 600, left: 300, position:'absolute'});
+    //d3.select('body').attr('align',center);                       
     svg.append('text')
                 .attr('x', width / 2)
                 .attr('y', margin)
