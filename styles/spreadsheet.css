@@ -1,5 +1,5 @@
 .tableheader{
-    font-size:30px;
+    font-size:20px;
     font-weight: bold;
     padding-right: 2rem;
     padding-left: 2rem;
@@ -10,7 +10,7 @@
 
 
 .rowheader{
-    font-size:30px;
+    font-size:20px;
     font-weight: bold;
     padding-right: 2rem;
     padding-left: 2rem;
@@ -19,7 +19,7 @@
     background-color: #e0e0e0;
 }
 .tableData{
-    font-size: 25px;
+    font-size: 18px;
     font-weight: lighter;
     padding-right: 2rem;
     padding-left: 2rem;
