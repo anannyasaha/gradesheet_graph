@@ -1,9 +1,19 @@
 // YOUR CODE GOES HERE
-var row_number=9;
-var column_number=6;
+var row_number;
+var column_number;
 var grad_dict=[];
+var rows;
+
 window.onload=function(){
-var table=document.getElementById("dataTable");
+
+fetch('grades.csv')
+.then((response)=>response.text())
+.then(function(content){
+    rows=content.split('\n');
+    row_number=rows.length;
+    column=rows[0].split(",");
+    column_number=column.length
+    var table=document.getElementById("dataTable");
 
 for(var i =0;i<row_number;i++){
 var row=table.insertRow(i);
@@ -11,35 +21,55 @@ for(var j =0;j<column_number;j++){
     var cell=row.insertCell(j);
     cell.setAttribute("id","cell"+i+j);
     cell.setAttribute("class","tableData");
-    cell.innerHTML="4.2";
-    if(j==4){
-        cell.innerHTML="50";
+    
+  }
+}
+for (var i =0;i<row_number;i++){
+    var present_row=rows[i];
+    
+    for (var j=0;j<column_number;j++){
+        var cell=document.getElementById("cell"+i+j);
+        var present_column=present_row.split(',');
+        
+        if(i==0){
+            cell.innerHTML=present_column[j];
+            cell.setAttribute("class","tableheader");
+        }
+        else if(j==0){
+            cell.innerHTML=present_column[j];
+            cell.setAttribute("class","rowheader");
+        }
+        else{
+        cell.innerHTML=present_column[j];
+        cell.setAttribute("class","tableData");
+        //console.log(cell.class)
     }
-    if(j==5){
-        cell.innerHTML="60";
     }
 }
-}
-for (var i=0;i<column_number;i++){
-    var cell=document.getElementById("cell0"+i);
-    cell.setAttribute("class","tableheader");
-    if(i==0){
-        cell.innerHTML="StudentID"
-    }
-    if(i>0&&i<4){
-        cell.innerHTML="Assmnt"+i;
-    } 
-    if(i==4)cell.innerHTML="Midterm";
-    if(i==5)cell.innerHTML="Final";
-}
-for (var i=1;i<row_number;i++){
-    var cell=document.getElementById("cell"+i+"0");
-    cell.setAttribute("class","rowheader");
-}
-for (var i=1;i<row_number;i++){
-    var cell=document.getElementById("cell"+i+"0");
-    cell.innerHTML="100000"+i; 
-}
+})
+
+
+// }
+// for (var i=0;i<column_number;i++){
+//     var cell=document.getElementById("cell0"+i);
+//     cell.setAttribute("class","tableheader");
+//     if(i==0){
+//         cell.innerHTML="StudentID"
+//     }
+//     if(i>0&&i<4){
+//         cell.innerHTML="Assmnt"+i;
+//     } 
+//     if(i==4)cell.innerHTML="Midterm";
+//     if(i==5)cell.innerHTML="Final";
+// }
+// for (var i=1;i<row_number;i++){
+//     var cell=document.getElementById("cell"+i+"0");
+//     cell.setAttribute("class","rowheader");
+// }
+// for (var i=1;i<row_number;i++){
+//     var cell=document.getElementById("cell"+i+"0");
+//     cell.innerHTML="100000"+i; 
+// }
 
     //var cell=document.getElementsByClassName("tableheader");
     $('.tableheader').click(
@@ -67,6 +97,7 @@ for (var i=1;i<row_number;i++){
             return false;
                })
     $('.tableData').on('click', function() {
+        console.log(this.class);
         deselectAll();
         this.style.background="#B2FFFF";
         var $this = $(this);
