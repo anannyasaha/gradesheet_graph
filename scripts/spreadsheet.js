@@ -42,10 +42,54 @@ for (var i =0;i<row_number;i++){
         else{
         cell.innerHTML=present_column[j];
         cell.setAttribute("class","tableData");
-        //console.log(cell.class)
     }
     }
 }
+$('.tableheader').click(
+    function(){
+        deselectAll();
+
+        var column=this.id.slice(5);
+        if(column==0){
+            return false;
+        }
+        
+        selectcolumn(column);
+        grade(column);
+        makeGraph();
+        return false;
+       })
+$('.rowheader').click(
+    function(){
+        deselectAll();
+
+        var row=this.id.slice(4,5);
+        if(row==0){
+            return false;
+        }
+        
+        return false;
+           })
+$('.tableData').on('click', function() {
+    console.log(this.class);
+    deselectAll();
+    this.style.background="#B2FFFF";
+    var $this = $(this);
+    var $input = $('<input>', {
+        value: $this.text(),
+        type: 'text',
+        width:'60px',
+        blur: function() {
+        $this.text(this.value);
+        },
+        keyup: function(e) {
+            if (e.which === 13) $input.blur();
+        }
+        }).appendTo( $this.empty() ).focus();
+    });
+
+
+
 })
 
 
@@ -72,49 +116,7 @@ for (var i =0;i<row_number;i++){
 // }
 
     //var cell=document.getElementsByClassName("tableheader");
-    $('.tableheader').click(
-        function(){
-            deselectAll();
-
-            var column=this.id.slice(5);
-            if(column==0){
-                return false;
-            }
-            selectcolumn(column);
-            grade(column);
-            makeGraph();
-            return false;
-           })
-    $('.rowheader').click(
-        function(){
-            deselectAll();
-    
-            var row=this.id.slice(4,5);
-            if(row==0){
-                return false;
-            }
-            
-            return false;
-               })
-    $('.tableData').on('click', function() {
-        console.log(this.class);
-        deselectAll();
-        this.style.background="#B2FFFF";
-        var $this = $(this);
-        var $input = $('<input>', {
-            value: $this.text(),
-            type: 'text',
-            width:'60px',
-            blur: function() {
-            $this.text(this.value);
-            },
-            keyup: function(e) {
-                if (e.which === 13) $input.blur();
-            }
-            }).appendTo( $this.empty() ).focus();
-        });
-    
-
+   
 };
 function grade(column_no){
     d3.select("svg").remove();
@@ -124,19 +126,23 @@ function grade(column_no){
         var C_count=0;
         var D_count=0;
         var F_count=0;
-        
+    var marks=0;
     for (var i=1;i<row_number;i++){
         var cell=document.getElementById("cell"+i+column_no);
-        if(cell.innerHTML>85){
+        marks=cell.innerHTML;
+        if(column_no>0 && column_no<4){
+            marks=cell.innerHTML*10;
+        }
+        if(marks>85){
             A_count++;
         }
-        else if(cell.innerHTML>75&&cell.innerHTML<86){
+        else if(marks>75&&marks<86){
             B_count++;
         }
-        else if(cell.innerHTML>65&&cell.innerHTML<76){
+        else if(marks>65&&marks<76){
             C_count++;
         }
-        else if(cell.innerHTML>55&&cell.innerHTML<66){
+        else if(marks>55&&marks<66){
             D_count++;
         }
         else F_count++;
@@ -153,8 +159,8 @@ function grade(column_no){
 }
 function makeGraph(){
     const margin = 50;
-    const width = 500;
-    const height = 250;
+    const width = 400;
+    const height = 350;
     const chartWidth = width - 2 * margin;
     const chartHeight = height - 2 * margin;
 
@@ -168,14 +174,15 @@ function makeGraph(){
     const yScale = d3.scaleLinear()
                             .domain([0, 1])
                             .range([chartHeight, 0]);
+                            
     
     let svg = d3.select('body')
                         .append('svg')
                             .attr('width', width)
                             .attr('height', height)
                             .attr("align","center");
-    $("svg").css({top: 600, left: 300, position:'absolute'});
-    //d3.select('body').attr('align',center);                       
+    //$("svg").css({top: 600, left: 300, position:'absolute'});
+    d3.select('body').attr('align','center');                       
     svg.append('text')
                 .attr('x', width / 2)
                 .attr('y', margin)
@@ -187,13 +194,13 @@ function makeGraph(){
                 .attr("class", "y label")
                 .attr("transform", "rotate(-90)")
                 .attr("y", 15)
-                .attr("x",-25)
+                .attr("x",-85)
                 .attr('text-anchor', 'end')
                 .text("Frequency(%)");
     svg.append("text")
                 .attr("class", "x label")
-                .attr("y",240)
-                .attr("x",295)
+                .attr("y",340)
+                .attr("x",235)
                 .attr('text-anchor', 'end')
                 .text("Grades");
 
