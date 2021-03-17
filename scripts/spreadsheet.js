@@ -62,8 +62,9 @@ $('.tableheader').click(
 $('.rowheader').click(
     function(){
         deselectAll();
-
+        
         var row=this.id.slice(4,5);
+        selectRow(row);
         if(row==0){
             return false;
         }
@@ -159,8 +160,8 @@ function grade(column_no){
 }
 function makeGraph(){
     const margin = 50;
-    const width = 400;
-    const height = 350;
+    const width = 500;
+    const height = 450;
     const chartWidth = width - 2 * margin;
     const chartHeight = height - 2 * margin;
 
@@ -188,25 +189,25 @@ function makeGraph(){
                 .attr('y', margin)
                 .attr('text-anchor', 'middle')
                 .text('Grade Distribution');
-                let g = svg.append('g')
+    let g = svg.append('g')
                 .attr('transform', `translate(${margin}, ${margin})`);
     svg.append("text")
                 .attr("class", "y label")
                 .attr("transform", "rotate(-90)")
-                .attr("y", 15)
+                .attr("y", 10)
                 .attr("x",-85)
                 .attr('text-anchor', 'end')
                 .text("Frequency(%)");
     svg.append("text")
                 .attr("class", "x label")
-                .attr("y",340)
+                .attr("y",440)
                 .attr("x",235)
                 .attr('text-anchor', 'end')
                 .text("Grades");
 
 // y-axis
 g.append('g')
-    .call(d3.axisLeft(yScale));
+    .call(d3.axisLeft(yScale).ticks(20,"s"));
 
 // x-axis
 g.append('g')
@@ -245,7 +246,7 @@ rectangles.transition()
     }
 function selectRow(row_no){
     for (var i=1;i<column_number;i++){
-        var cell=document.getElemnetById("cell"+row_no+i);
+        var cell=document.getElementById("cell"+row_no+i);
         cell.style.background="#B2FFFF";
     }
 }
